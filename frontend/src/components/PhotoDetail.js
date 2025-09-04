@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,11 +11,7 @@ function PhotoDetail({ user }) {
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchPhoto();
-  }, [id]);
-
-  const fetchPhoto = async () => {
+  const fetchPhoto = useCallback(async () => {
     try {
       const response = await axios.get(`/api/photos/${id}`);
       setPhoto(response.data);
@@ -25,7 +21,11 @@ function PhotoDetail({ user }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    fetchPhoto();
+  }, [fetchPhoto]);
 
   const handleVote = async (voteType) => {
     if (!user) {
@@ -95,7 +95,7 @@ function PhotoDetail({ user }) {
     <div className="photo-detail">
       <div className="card">
         <img 
-          src={`/photos/${photo.photo_id}.gif`} 
+          src={`http://localhost:5000/photos/${photo.name.trim()}.gif`} 
           alt={photo.name}
           onError={(e) => {
             e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlPC90ZXh0Pjwvc3ZnPg==';
