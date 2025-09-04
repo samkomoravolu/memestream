@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import ShareButton from './ShareButton';
 
 function PhotoDetail({ user }) {
   const { id } = useParams();
@@ -95,13 +96,16 @@ function PhotoDetail({ user }) {
     <div className="photo-detail">
       <div className="card">
         <img 
-          src={`http://localhost:5000/photos/${photo.name.trim()}.gif`} 
+          src={`/photos/${photo.name}.gif`} 
           alt={photo.name}
           onError={(e) => {
             e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlPC90ZXh0Pjwvc3ZnPg==';
           }}
         />
-        <h1>{photo.name}</h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+          <h1 style={{ margin: 0 }}>{photo.name}</h1>
+          <ShareButton photo={photo} url={window.location.href} />
+        </div>
         
         <div className="photo-stats">
           <div className="stat">

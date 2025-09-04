@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ShareButton from './ShareButton';
 
 function Home() {
   const [photos, setPhotos] = useState([]);
@@ -16,7 +17,7 @@ function Home() {
       const response = await axios.get('/api/photos');
       setPhotos(response.data);
     } catch (error) {
-      setError('Failed to load photos');
+      setError('Sorry, we are facing some issues. Please try again later.');
       console.error('Error fetching photos:', error);
     } finally {
       setLoading(false);
@@ -60,14 +61,17 @@ function Home() {
             <div key={photo.photo_id} className="photo-card">
               <Link to={`/photo/${photo.photo_id}`}>
                 <img 
-                  src={`http://localhost:5000/photos/${photo.name.trim()}.gif`} 
+                  src={`/photos/${photo.name}.gif`} 
                   alt={photo.name}
                   onError={(e) => {
                     e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlPC90ZXh0Pjwvc3ZnPg==';
                   }}
                 />
                 <div className="photo-card-content">
-                  <h3>{photo.name}</h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <h3 style={{ margin: 0 }}>{photo.name}</h3>
+                    <ShareButton photo={photo} url={`${window.location.origin}/photo/${photo.photo_id}`} />
+                  </div>
                   <p>Click to view and comment!</p>
                 </div>
               </Link>
