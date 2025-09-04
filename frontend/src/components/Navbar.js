@@ -10,10 +10,16 @@ function Navbar({ user, onLogout }) {
             MemeStream
           </Link>
           <div className="navbar-nav">
+            <Link to="/" className="nav-link">
+              🏠 Home
+            </Link>
+            <Link to="/weekly-vote" className="nav-link">
+              📊 Weekly Vote
+            </Link>
             {user ? (
               <>
                 <Link to="/upload" className="nav-link">
-                  Upload GIF
+                  📤 Upload GIF
                 </Link>
                 <span className="nav-link">
                   Welcome, {user.email}

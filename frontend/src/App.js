@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Home from './components/Home';
 import PhotoDetail from './components/PhotoDetail';
 import Upload from './components/Upload';
+import WeeklyVote from './components/WeeklyVote';
 import './App.css';
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
               path="/upload" 
               element={user ? <Upload /> : <Navigate to="/login" />} 
             />
+            <Route path="/weekly-vote" element={<WeeklyVote user={user} />} />
             <Route path="/photo/:id" element={<PhotoDetail user={user} />} />
           </Routes>
         </div>
