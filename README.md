@@ -108,7 +108,6 @@ The backend will run on `http://localhost:5000`
 The frontend will run on `http://localhost:3000`
 
 ## Usage
-
 ### Getting Started
 1. Open your browser and go to `http://localhost:3000`
 2. Create an account or login with existing credentials
@@ -117,18 +116,17 @@ The frontend will run on `http://localhost:3000`
 
 ### Existing Users
 You can use these pre-existing accounts for testing:
-- **Email**: samkomoravolu@gmail.com, **Password**: 1234
-- **Email**: vishu.gundi@gmail.com, **Password**: 9999
+- **Email**: samkomoravolu@gmail.com, **Password**: hiimbob72
+- **Email**: vishu.gundi@gmail.com, **Password**: 9999cool
 
 ### Features
-- **Home Page**: View all GIFs in a responsive grid
-- **Photo Detail**: Click any GIF to see full size, vote, and comment
+- **Home Page**: View all pictures and/or gifs  in a responsive grid
+- **Photo Detail**: Click any photo and/or to see full size, vote, and comment
 - **Upload**: Logged-in users can upload new GIFs
 - **Voting**: Upvote/downvote GIFs (one vote per user per GIF)
 - **Comments**: Add and view comments on GIFs
 
 ## API Endpoints
-
 ### Authentication
 - `POST /api/register` - User registration
 - `POST /api/login` - User login
@@ -149,6 +147,9 @@ The application uses CSV files for data persistence:
 - **photos.csv**: Photo metadata (ID, name)
 - **comments.csv**: User comments on photos
 - **votes.csv**: User votes on photos
+-**poll.csv
+--**poll_votes.csv
+
 
 ## Security Features
 
@@ -185,7 +186,8 @@ The application uses CSV files for data persistence:
 
 3. **File Upload Issues**
    - Ensure the `photos/` directory exists and has write permissions
-   - Check that only GIF files are being uploaded
+   - Check that only gifs or jpeg or webp jpg or png
+ files are being uploaded
 
 4. **Authentication Issues**
    - Clear browser localStorage and try logging in again

@@ -749,3 +749,79 @@ code {
     font-size: 20px;
   }
 }
+
+/* Forgot Password Styles */
+.auth-links {
+  text-align: center;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-links a {
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-link:hover {
+  text-decoration: underline;
+}
+
+/* Code input styling */
+input[type="text"][maxlength="6"] {
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  border: 2px solid #e1e5e9;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"][maxlength="6"]:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Step indicator */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.step {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin: 0 8px;
+  background: #e1e5e9;
+  color: #666;
+}
+
+.step.active {
+  background: #667eea;
+  color: white;
+}
+
+.step.completed {
+  background: #4CAF50;
+  color: white;
+}

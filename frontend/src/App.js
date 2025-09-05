@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Navbar from './components/Navbar';
 import Login from './components/Login';
 import Register from './components/Register';
+import ForgotPassword from './components/ForgotPassword';
 import Home from './components/Home';
 import PhotoDetail from './components/PhotoDetail';
 import Upload from './components/Upload';
@@ -54,6 +55,10 @@ function App() {
             <Route 
               path="/register" 
               element={user ? <Navigate to="/" /> : <Register onLogin={login} />} 
+            />
+            <Route 
+              path="/forgot-password" 
+              element={user ? <Navigate to="/" /> : <ForgotPassword />} 
             />
             <Route 
               path="/upload" 

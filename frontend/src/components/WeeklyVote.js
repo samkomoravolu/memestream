@@ -263,3 +263,5 @@ function WeeklyVote({ user }) {
 }
 
 export default WeeklyVote;
+
+
