@@ -93,9 +93,16 @@ function Login({ onLogin }) {
           </button>
         </div>
         
-        <p style={{ textAlign: 'center', marginTop: '20px' }}>
-          Don't have an account? <Link to="/register">Sign up</Link>
-        </p>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <p>
+            Don't have an account? <Link to="/register">Sign up</Link>
+          </p>
+          <p style={{ marginTop: '12px' }}>
+            <Link to="/forgot-password" style={{ color: '#667eea', textDecoration: 'none' }}>
+              Forgot your password?
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

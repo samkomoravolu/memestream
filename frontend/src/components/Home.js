@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import ShareButton from './ShareButton';
 
 function Home() {
   const [photos, setPhotos] = useState([]);
@@ -39,7 +40,7 @@ function Home() {
       
       setPhotos(photosWithVotes);
     } catch (error) {
-      setError('Failed to load photos');
+      setError('Sorry, we are facing some issues. Please try again later.');
       console.error('Error fetching photos:', error);
     } finally {
       setLoading(false);
