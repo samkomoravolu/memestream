@@ -13,10 +13,13 @@ function Navbar({ user, onLogout }) {
             {user ? (
               <>
                 <Link to="/upload" className="nav-link">
-                  Upload GIF
+                  Upload Image
+                </Link>
+                <Link to="/poll" className="nav-link">
+                  Weekly Poll
                 </Link>
                 <span className="nav-link">
-                  Welcome, {user.email}
+                  Welcome, {user.username || user.email}
                 </span>
                 <button onClick={onLogout} className="btn btn-secondary">
                   Logout

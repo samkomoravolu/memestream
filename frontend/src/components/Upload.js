@@ -21,14 +21,24 @@ function Upload() {
   };
 
   const handleFileSelect = (file) => {
-    if (file && file.type === 'image/gif') {
+    const allowedTypes = [
+      'image/jpeg',
+      'image/jpg', 
+      'image/png',
+      'image/gif',
+      'image/webp',
+      'image/bmp',
+      'image/svg+xml'
+    ];
+    
+    if (file && allowedTypes.includes(file.type)) {
       setFormData({
         ...formData,
         photo: file
       });
       setError('');
     } else {
-      setError('Please select a valid GIF file');
+      setError('Please select a valid image file (JPG, PNG, GIF, WebP, BMP, SVG)');
       setFormData({
         ...formData,
         photo: null
@@ -133,7 +143,7 @@ function Upload() {
               type="file"
               id="photo"
               name="photo"
-              accept="image/gif"
+              accept="image/*"
               onChange={(e) => handleFileSelect(e.target.files[0])}
             />
             <label htmlFor="photo">
@@ -142,8 +152,8 @@ function Upload() {
                   `Selected: ${formData.photo.name}`
                 ) : (
                   <>
-                    📁 Drop your GIF here or click to browse<br />
-                    <small>Only GIF files are supported</small>
+                    📁 Drop your image here or click to browse<br />
+                    <small>JPG, PNG, GIF, WebP, BMP, SVG files supported</small>
                   </>
                 )}
               </div>

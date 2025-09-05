@@ -6,6 +6,7 @@ import Register from './components/Register';
 import Home from './components/Home';
 import PhotoDetail from './components/PhotoDetail';
 import Upload from './components/Upload';
+import Poll from './components/Poll';
 import './App.css';
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               element={user ? <Upload /> : <Navigate to="/login" />} 
             />
             <Route path="/photo/:id" element={<PhotoDetail user={user} />} />
+            <Route path="/poll" element={<Poll user={user} />} />
           </Routes>
         </div>
       </div>

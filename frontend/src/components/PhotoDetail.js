@@ -10,6 +10,7 @@ function PhotoDetail({ user }) {
   const [error, setError] = useState('');
   const [comment, setComment] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState('');
 
   const fetchPhoto = useCallback(async () => {
     try {
@@ -72,6 +73,38 @@ function PhotoDetail({ user }) {
     }
   };
 
+  const handleShare = async (platform) => {
+    const url = window.location.href;
+    const title = photo?.name || 'Check out this meme!';
+    
+    if (platform === 'copy') {
+      try {
+        await navigator.clipboard.writeText(url);
+        setShareSuccess('Link copied to clipboard!');
+        setTimeout(() => setShareSuccess(''), 3000);
+      } catch (err) {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setShareSuccess('Link copied to clipboard!');
+        setTimeout(() => setShareSuccess(''), 3000);
+      }
+    } else if (platform === 'twitter') {
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`;
+      window.open(twitterUrl, '_blank');
+    } else if (platform === 'facebook') {
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+      window.open(facebookUrl, '_blank');
+    } else if (platform === 'reddit') {
+      const redditUrl = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`;
+      window.open(redditUrl, '_blank');
+    }
+  };
+
   if (loading) {
     return (
       <div className="card">
@@ -94,14 +127,14 @@ function PhotoDetail({ user }) {
   return (
     <div className="photo-detail">
       <div className="card">
-        <img 
-          src={`http://localhost:5000/photos/${photo.name.trim()}.gif`} 
-          alt={photo.name}
-          onError={(e) => {
-            e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlPC90ZXh0Pjwvc3ZnPg==';
-          }}
-        />
-        <h1>{photo.name}</h1>
+                 <img 
+           src={`http://localhost:5000/photos/${photo.extension ? photo.photo_id + photo.extension : (photo.name || '').trim() + '.gif'}`} 
+           alt={photo.name || 'Untitled'}
+           onError={(e) => {
+             e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjBmMGYwIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxOCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIGltYWdlPC90ZXh0Pjwvc3ZnPg==';
+           }}
+         />
+         <h1>{photo.name || 'Untitled'}</h1>
         
         <div className="photo-stats">
           <div className="stat">
@@ -135,6 +168,41 @@ function PhotoDetail({ user }) {
           </div>
         )}
 
+        <div className="share-section">
+          <h4>Share this meme:</h4>
+          {shareSuccess && <div className="success">{shareSuccess}</div>}
+          <div className="share-buttons">
+            <button 
+              onClick={() => handleShare('copy')} 
+              className="share-btn copy"
+              title="Copy link"
+            >
+              📋 Copy Link
+            </button>
+            <button 
+              onClick={() => handleShare('twitter')} 
+              className="share-btn twitter"
+              title="Share on Twitter"
+            >
+              🐦 Twitter
+            </button>
+            <button 
+              onClick={() => handleShare('facebook')} 
+              className="share-btn facebook"
+              title="Share on Facebook"
+            >
+              📘 Facebook
+            </button>
+            <button 
+              onClick={() => handleShare('reddit')} 
+              className="share-btn reddit"
+              title="Share on Reddit"
+            >
+              🔴 Reddit
+            </button>
+          </div>
+        </div>
+
         <div className="comments-section">
           <h3>Comments</h3>
           
@@ -162,12 +230,12 @@ function PhotoDetail({ user }) {
           )}
 
           {photo.comments && photo.comments.length > 0 ? (
-            photo.comments.map((comment, index) => (
-              <div key={index} className="comment">
-                <div className="comment-author">{comment.user_id}</div>
-                <div className="comment-text">{comment.comment}</div>
-              </div>
-            ))
+                         photo.comments.map((comment, index) => (
+               <div key={index} className="comment">
+                 <div className="comment-author">{comment.username || comment.user_id}</div>
+                 <div className="comment-text">{comment.comment}</div>
+               </div>
+             ))
           ) : (
             <p>No comments yet. Be the first to comment!</p>
           )}

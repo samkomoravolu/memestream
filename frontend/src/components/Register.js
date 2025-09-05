@@ -5,6 +5,7 @@ import axios from 'axios';
 function Register({ onLogin }) {
   const [formData, setFormData] = useState({
     email: '',
+    username: '',
     password: '',
     confirmPassword: ''
   });
@@ -37,6 +38,7 @@ function Register({ onLogin }) {
     try {
       const response = await axios.post('/api/register', {
         email: formData.email,
+        username: formData.username,
         password: formData.password
       });
       onLogin(response.data.user, response.data.token);
@@ -60,6 +62,17 @@ function Register({ onLogin }) {
               id="email"
               name="email"
               value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
               required
             />
